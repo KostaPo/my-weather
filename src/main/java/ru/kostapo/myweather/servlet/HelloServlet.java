@@ -1,4 +1,4 @@
-package ru.kostapo.myweather;
+package ru.kostapo.myweather.servlet;
 
 import java.io.*;
 import javax.servlet.http.*;

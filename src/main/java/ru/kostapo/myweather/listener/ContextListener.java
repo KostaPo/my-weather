@@ -1,7 +1,12 @@
 package ru.kostapo.myweather.listener;
 
 import org.hibernate.SessionFactory;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import ru.kostapo.myweather.utils.HibernateUtil;
+import ru.kostapo.myweather.utils.ThymeleafUtil;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -15,12 +20,14 @@ public class ContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
 
         ServletContext context = servletContextEvent.getServletContext();
-
         context.setRequestCharacterEncoding("UTF-8");
         context.setResponseCharacterEncoding("UTF-8");
 
-        sessionFactory = HibernateUtil.getSessionFactory();
+        TemplateEngine templateEngine =
+                ThymeleafUtil.getTemplateEngine(context);
+        context.setAttribute("templateEngine", templateEngine);
 
+        sessionFactory = HibernateUtil.getSessionFactory();
     }
 
     @Override

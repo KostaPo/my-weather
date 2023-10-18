@@ -9,13 +9,9 @@
         <listener-class>ru.kostapo.myweather.listener.ContextListener</listener-class>
     </listener>
 
-    <servlet>
-        <servlet-name>MainServlet</servlet-name>
-        <servlet-class>ru.kostapo.myweather.servlet.MainServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
-        <servlet-name>MainServlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/static/*</url-pattern>
     </servlet-mapping>
 
 </web-app>

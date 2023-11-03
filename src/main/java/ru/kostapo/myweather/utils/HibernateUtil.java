@@ -1,10 +1,10 @@
 package ru.kostapo.myweather.utils;
 
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-import ru.kostapo.myweather.exception.HibernateException;
 import ru.kostapo.myweather.model.Location;
 import ru.kostapo.myweather.model.Session;
 import ru.kostapo.myweather.model.User;

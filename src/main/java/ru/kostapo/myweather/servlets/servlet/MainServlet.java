@@ -1,10 +1,10 @@
-package ru.kostapo.myweather.servlet;
+package ru.kostapo.myweather.servlets.servlet;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
+import ru.kostapo.myweather.dto.UserResDto;
 
 import java.io.*;
-import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
@@ -20,15 +20,13 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        // Создаем контекст и добавляем атрибуты, которые мы хотим использовать в шаблоне
         WebContext webContext = new WebContext(request, response, getServletContext());
-        webContext.setVariable("name", "KostaPo");
 
-        // Генерируем HTML из шаблона с использованием TemplateEngine
+        UserResDto user = (UserResDto) request.getSession().getAttribute("user");
+
+        webContext.setVariable("user", user);
+
         String output = templateEngine.process("index", webContext);
-
-        // Отправляем результат клиенту
         response.setContentType("text/html;charset=UTF-8");
         response.getWriter().write(output);
     }

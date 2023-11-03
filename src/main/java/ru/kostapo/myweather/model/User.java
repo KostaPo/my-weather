@@ -2,6 +2,7 @@ package ru.kostapo.myweather.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -15,7 +16,6 @@ import java.util.Set;
 @Table(name="users",
         uniqueConstraints = @UniqueConstraint(columnNames = "login"),
         indexes = {@Index(name = "login_idx", columnList = "login")})
-// то Hibernate выбросит исключение javax.persistence.PersistenceException.
 public class User {
 
     private static final String SEQ_NAME = "user_seq";
@@ -31,9 +31,11 @@ public class User {
     private String login;
 
     @NotEmpty(message = "Введите пароль!")
+    @Size(min = 3, message = "Пароль должен быть от 3 символов!")
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    //TODO переделать на treeset сорт по add time
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Location> locations = new HashSet<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)

@@ -1,0 +1,68 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/common :: head"/>
+</head>
+
+<body>
+<!-- HEADER -->
+<header>
+    <th:block th:include="fragments/common :: header"/>
+</header>
+
+<!-- SIGNUP FORM -->
+<div class="container-fluid mt-5">
+    <div class="d-flex justify-content-center">
+        <div class="col-md-10 p-3 rounded border border-5 border-dark">
+            <form action="#" method="post" th:action="@{/signup}">
+                <div class="d-flex justify-content-center">
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label text">
+                            <h1 class="text-center text">РЕГИСТРАЦИЯ</h1>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="login" class="col-md-2 col-form-label text">
+                        <i class="icon-user"></i>Логин
+                    </label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="login" name="login" placeholder="Введите логин">
+                        <div th:if="${errors and errors.hasErrors('login')}" class="error">
+                            <span th:text="${errors.getError('login')}"></span>
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="password" class="col-md-2 col-form-label text">
+                        <i class="icon-lock"></i>Пароль
+                    </label>
+                    <div class="col-md-10">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Введите пароль">
+                        <div th:if="${errors and errors.hasErrors('password')}" class="error">
+                            <span th:text="${errors.getError('password')}"></span>
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-secondary"
+                            style="background-color: var(--grey_col); color: var(--black_col);">Отправить
+                    </button>
+                </div>
+                <br/>
+                <div class="text-center">
+                    Есть аккаунт? <a th:href="@{/signin}" class="text-dark">Войдите</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+    <th:block th:include="fragments/common :: footer"/>
+</footer>
+</body>
+</html>

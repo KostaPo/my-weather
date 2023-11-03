@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Greetings</title>
-    <link th:href="@{/static/bootstrap/bootstrap.min.css}" rel="stylesheet" />
-</head>
+    <th:block th:include="fragments/common :: head"/>
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col">1</div>
-        <div class="col">2</div>
-        <div class="col">3</div>
-    </div>
-</div>
-<h1>Привет, <span th:text="${name}"></span>!</h1>
-<script th:src="@{/static/bootstrap/bootstrap.min.js}"></script>
+
+<!-- HEADER -->
+<header>
+    <th:block th:include="fragments/common :: header"/>
+</header>
+
+<h1>Привет, <span th:text="${user.getLogin()}"></span>!</h1>
+
+<form action="/logout" method="post">
+    <button type="submit">Выйти</button>
+</form>
+
+<!-- FOOTER -->
+<footer>
+    <th:block th:include="fragments/common :: footer"/>
+</footer>
+
 </body>
 </html>

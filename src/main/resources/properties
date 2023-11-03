@@ -1,3 +1,5 @@
 database.url=jdbc:postgresql://localhost:5432/MyWeatherMainDB
 database.username=postgres
 database.password=10293847
+
+session_ttl=1

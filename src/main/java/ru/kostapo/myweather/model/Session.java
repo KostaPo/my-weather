@@ -24,7 +24,7 @@ public class Session {
     @NotNull
     LocalDateTime expiresAt;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", unique = true)
     private User user;
 }

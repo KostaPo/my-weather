@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface SessionService {
-    Optional<Session> findById(UUID id);
-    Session getNewSession(User user);
+    Optional<Session> findById(String id);
+    void deleteById(String id);
+    Session newSessionForUser(User user);
+    Session save(Session session);
 }

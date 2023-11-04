@@ -1,4 +1,4 @@
-package ru.kostapo.myweather.common;
+package ru.kostapo.myweather.exception;
 
 import ru.kostapo.myweather.model.User;
 
@@ -7,10 +7,12 @@ import java.util.*;
 
 public class BindingResult {
 
-    private final Map<String, List<String>> errors = new HashMap<>();
+    //TODO вывод ошибок по очереди
+
+    private final Map<String, LinkedHashSet<String>> errors = new LinkedHashMap<>();
 
     public BindingResult(String field, String errorText) {
-        errors.put(field, new ArrayList<>());
+        errors.put(field, new LinkedHashSet<>());
         errors.get(field).add(errorText);
     }
 
@@ -19,7 +21,7 @@ public class BindingResult {
             String field = String.valueOf(violation.getPropertyPath());
             String errorText = violation.getMessage();
             if(!errors.containsKey(field)) {
-                errors.put(field, new ArrayList<>());
+                errors.put(field, new LinkedHashSet<>());
                 errors.get(field).add(errorText);
             } else {
                 errors.get(field).add(errorText);
@@ -32,6 +34,6 @@ public class BindingResult {
     }
 
     public String getError(String field) {
-        return errors.get(field).get(0);
+        return errors.get(field).stream().findFirst().get();
     }
 }

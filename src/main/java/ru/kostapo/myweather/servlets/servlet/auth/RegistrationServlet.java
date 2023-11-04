@@ -3,7 +3,7 @@ package ru.kostapo.myweather.servlets.servlet.auth;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import ru.kostapo.myweather.dto.UserReqDto;
-import ru.kostapo.myweather.common.BindingResult;
+import ru.kostapo.myweather.exception.BindingResult;
 import ru.kostapo.myweather.dto.UserResDto;
 import ru.kostapo.myweather.exception.UniqConstraintViolationException;
 import ru.kostapo.myweather.exception.ValidConstraintViolationException;
@@ -30,7 +30,6 @@ public class RegistrationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         WebContext webContext = new WebContext(request, response, getServletContext());
         String output = templateEngine.process("signup", webContext);
-        response.setContentType("text/html;charset=UTF-8");
         response.getWriter().write(output);
     }
 
@@ -42,7 +41,7 @@ public class RegistrationServlet extends HttpServlet {
                 .password(request.getParameter("password"))
                 .build();
         try {
-            UserResDto userResponse = userServiceImpl.save(userRequest);
+            UserResDto userResponse = userServiceImpl.userRegistration(userRequest);
             Cookie cookie = new Cookie("session_id", userResponse.getSession_id());
             long ttlHours = Long.parseLong(PropertiesUtil.getProperty("session_ttl"));
             cookie.setMaxAge((int) (ttlHours * 60 * 60));

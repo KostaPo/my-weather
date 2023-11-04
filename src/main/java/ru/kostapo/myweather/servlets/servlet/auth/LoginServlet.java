@@ -2,7 +2,7 @@ package ru.kostapo.myweather.servlets.servlet.auth;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
-import ru.kostapo.myweather.common.BindingResult;
+import ru.kostapo.myweather.exception.BindingResult;
 import ru.kostapo.myweather.dto.UserReqDto;
 import ru.kostapo.myweather.dto.UserResDto;
 import ru.kostapo.myweather.exception.PasswordMismatchException;
@@ -33,7 +33,6 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         WebContext webContext = new WebContext(request, response, getServletContext());
         String output = templateEngine.process("signin", webContext);
-        response.setContentType("text/html;charset=UTF-8");
         response.getWriter().write(output);
     }
 
@@ -45,7 +44,7 @@ public class LoginServlet extends HttpServlet {
                 .password(request.getParameter("password"))
                 .build();
         try {
-            UserResDto userResponse = userServiceImpl.authentication(userRequest);
+            UserResDto userResponse = userServiceImpl.userLogin(userRequest);
             Cookie cookie = new Cookie("session_id", userResponse.getSession_id());
             long ttlHours = Long.parseLong(PropertiesUtil.getProperty("session_ttl"));
             cookie.setMaxAge((int) (ttlHours * 60 * 60));
@@ -56,12 +55,10 @@ public class LoginServlet extends HttpServlet {
             BindingResult bindingResult = new BindingResult("login", e.getMessage());
             context.setVariable("errors", bindingResult);
             templateEngine.process("signin", context, response.getWriter());
-            return;
         } catch (PasswordMismatchException e) {
             BindingResult bindingResult = new BindingResult("password", e.getMessage());
             context.setVariable("errors", bindingResult);
             templateEngine.process("signin", context, response.getWriter());
-            return;
         }
     }
 }

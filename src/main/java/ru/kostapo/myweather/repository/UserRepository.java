@@ -4,15 +4,12 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.query.Query;
 import ru.kostapo.myweather.exception.UniqConstraintViolationException;
 import ru.kostapo.myweather.model.User;
 import ru.kostapo.myweather.utils.HibernateUtil;
 
 import javax.persistence.PersistenceException;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.Optional;
 
     public class UserRepository implements Repository<User, String> {
@@ -22,7 +19,7 @@ import java.util.Optional;
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.persist(entity);
+            session.save(entity);
             transaction.commit();
             return entity;
         } catch (PersistenceException e) {
@@ -46,14 +43,10 @@ import java.util.Optional;
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<User> query = builder.createQuery(User.class);
-            Root<User> root = query.from(User.class);
-
-            Predicate predicate = builder.equal(root.get("login"), login);
-            query.select(root).where(predicate);
-
-            User user = session.createQuery(query).uniqueResult();
+            User user = session
+                    .createQuery("SELECT u FROM User u LEFT JOIN FETCH u.sessions WHERE u.login = :login", User.class)
+                    .setParameter("login", login)
+                    .uniqueResult();
             transaction.commit();
             return Optional.ofNullable(user);
         } catch (Exception e) {
@@ -63,4 +56,21 @@ import java.util.Optional;
             throw new HibernateException("Can't save entity", e);
         }
     }
-}
+
+        @Override
+        public void deleteByKey(String login) {
+            /*Transaction transaction = null;
+            try (org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession()) {
+                transaction = session.beginTransaction();
+                Query<?> query = session.createQuery("DELETE FROM User WHERE login = :login");
+                query.setParameter("login", login);
+                query.executeUpdate();
+                transaction.commit();
+            } catch (Exception e) {
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+                throw new HibernateException("Can't delete user", e);
+            }*/
+        }
+    }

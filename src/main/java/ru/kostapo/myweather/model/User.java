@@ -2,13 +2,11 @@ package ru.kostapo.myweather.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Setter
 @Getter
@@ -34,10 +32,9 @@ public class User {
     @Size(min = 3, message = "Пароль должен быть от 3 символов!")
     private String password;
 
-    //TODO переделать на treeset сорт по add time
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<Location> locations = new HashSet<>();
+    private Set<Location> locations = new LinkedHashSet<>();
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private Session session;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<Session> sessions = new LinkedHashSet<>();
 }

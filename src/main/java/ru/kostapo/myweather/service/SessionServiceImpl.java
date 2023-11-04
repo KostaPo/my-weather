@@ -22,17 +22,25 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public Optional<Session> findById(UUID id) {
+    public Optional<Session> findById(String id) {
         return Optional.empty();
     }
 
     @Override
-    public Session getNewSession(User user) {
+    public void deleteById(String id) {
+        sessionRepository.deleteByKey(id);
+    }
+
+    @Override
+    public Session newSessionForUser(User user) {
         Session session = new Session();
         session.setUser(user);
         session.setExpiresAt(LocalDateTime.now().plus(SESSION_TTL));
-        return sessionRepository.save(session);
+        return session;
     }
 
-
+    @Override
+    public Session save(Session session) {
+        return sessionRepository.save(session);
+    }
 }

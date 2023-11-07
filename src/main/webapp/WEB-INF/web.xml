@@ -7,7 +7,7 @@
     <display-name>my-weather</display-name>
 
     <listener>
-        <listener-class>ru.kostapo.myweather.servlets.MainContextListener</listener-class>
+        <listener-class>ru.kostapo.myweather.servlets.listener.HibernateContextListener</listener-class>
     </listener>
 
     <servlet-mapping>

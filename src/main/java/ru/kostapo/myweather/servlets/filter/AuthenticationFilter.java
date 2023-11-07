@@ -67,13 +67,4 @@ public class AuthenticationFilter implements Filter {
         }
         return null;
     }
-
-    private boolean isValidUUID(String uuidString) {
-        try {
-            UUID uuid = UUID.fromString(uuidString);
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
-    }
 }

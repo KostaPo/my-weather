@@ -2,9 +2,9 @@ package ru.kostapo.myweather.servlets.servlet.auth;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
-import ru.kostapo.myweather.dto.UserReqDto;
+import ru.kostapo.myweather.model.dto.UserReqDto;
 import ru.kostapo.myweather.exception.BindingResult;
-import ru.kostapo.myweather.dto.UserResDto;
+import ru.kostapo.myweather.model.dto.UserResDto;
 import ru.kostapo.myweather.exception.UniqConstraintViolationException;
 import ru.kostapo.myweather.exception.ValidConstraintViolationException;
 import ru.kostapo.myweather.service.UserServiceImpl;

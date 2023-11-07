@@ -1,12 +1,12 @@
 package ru.kostapo.myweather.service;
 
-import ru.kostapo.myweather.dto.UserResDto;
+import ru.kostapo.myweather.model.dto.UserResDto;
 import ru.kostapo.myweather.exception.PasswordMismatchException;
 import ru.kostapo.myweather.exception.UserNotFoundException;
 import ru.kostapo.myweather.exception.ValidConstraintViolationException;
 import ru.kostapo.myweather.model.Session;
 import ru.kostapo.myweather.repository.UserRepository;
-import ru.kostapo.myweather.dto.UserReqDto;
+import ru.kostapo.myweather.model.dto.UserReqDto;
 import ru.kostapo.myweather.model.mapper.UserMapper;
 import ru.kostapo.myweather.model.User;
 import ru.kostapo.myweather.utils.PasswordUtil;

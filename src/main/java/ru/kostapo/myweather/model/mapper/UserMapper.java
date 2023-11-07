@@ -3,8 +3,8 @@ package ru.kostapo.myweather.model.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import ru.kostapo.myweather.dto.UserReqDto;
-import ru.kostapo.myweather.dto.UserResDto;
+import ru.kostapo.myweather.model.dto.UserReqDto;
+import ru.kostapo.myweather.model.dto.UserResDto;
 import ru.kostapo.myweather.model.User;
 
 @Mapper

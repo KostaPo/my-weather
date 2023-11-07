@@ -1,4 +1,4 @@
-package ru.kostapo.myweather.dto;
+package ru.kostapo.myweather.model.dto;
 
 import lombok.Builder;
 import lombok.Getter;

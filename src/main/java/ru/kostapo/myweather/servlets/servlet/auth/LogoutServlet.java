@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.UUID;
 
 @WebServlet (name = "Logout", urlPatterns = "/logout")
 public class LogoutServlet extends HttpServlet {
@@ -30,6 +29,6 @@ public class LogoutServlet extends HttpServlet {
                 }
             }
         }
-        response.sendRedirect("/");
+        response.sendRedirect("/signin");
     }
 }

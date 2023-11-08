@@ -11,18 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 @WebFilter(urlPatterns = "/*")
 public class AuthenticationFilter implements Filter {
 
-    private SessionService sessionService;
     private List<String> allowedUrlsForNoAuthenticatedUsers;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         allowedUrlsForNoAuthenticatedUsers = Arrays.asList("/signin", "/signup");
-        sessionService = new SessionServiceImpl();
     }
 
     @Override

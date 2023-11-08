@@ -2,4 +2,8 @@ database.url=jdbc:postgresql://localhost:5432/MyWeatherMainDB
 database.username=postgres
 database.password=10293847
 
-session_ttl=1
+session_ttl=30
+
+scheduler.pool=1
+scheduler.delay.min=1
+scheduler.period.min=1

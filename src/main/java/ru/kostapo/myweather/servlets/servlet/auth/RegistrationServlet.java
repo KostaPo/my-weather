@@ -43,8 +43,8 @@ public class RegistrationServlet extends HttpServlet {
         try {
             UserResDto userResponse = userServiceImpl.userRegistration(userRequest);
             Cookie cookie = new Cookie("session_id", userResponse.getSession_id());
-            long ttlHours = Long.parseLong(PropertiesUtil.getProperty("session_ttl"));
-            cookie.setMaxAge((int) (ttlHours * 60 * 60));
+            long ttlMin = Long.parseLong(PropertiesUtil.getProperty("session_ttl"));
+            cookie.setMaxAge((int) (ttlMin * 60));
             response.addCookie(cookie);
             request.getSession().setAttribute("user", userResponse);
             response.sendRedirect("/");

@@ -2,12 +2,10 @@ package ru.kostapo.myweather.repository;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import ru.kostapo.myweather.model.Session;
 import ru.kostapo.myweather.utils.HibernateUtil;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 public class SessionRepository implements Repository<Session, String> {
@@ -64,20 +62,20 @@ public class SessionRepository implements Repository<Session, String> {
         }
     }
 
-    public List<Session> getExpiredSessions(LocalDateTime current) {
+    public void deleteExpiredSessions(LocalDateTime currentTime) {
         Transaction transaction = null;
         try (org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            String queryString = "SELECT s FROM Session s WHERE s.expiresAt < :current";
-            Query query = session.createQuery(queryString);
-            query.setParameter("current", current);
+            String queryString = "DELETE FROM Session WHERE expiresAt < :currentTime";
+            session.createQuery(queryString)
+                    .setParameter("currentTime", currentTime)
+                    .executeUpdate();
             transaction.commit();
-            return (List<Session>) query.getResultList();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new HibernateException("Can't find exp session", e);
+            throw new HibernateException("Can't delete exp session", e);
         }
     }
 }

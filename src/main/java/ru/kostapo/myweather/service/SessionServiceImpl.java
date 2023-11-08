@@ -15,8 +15,8 @@ public class SessionServiceImpl implements SessionService {
     private final SessionRepository sessionRepository;
 
     public SessionServiceImpl() {
-        long ttlHours = Long.parseLong(PropertiesUtil.getProperty("session_ttl"));
-        SESSION_TTL = Duration.ofHours(ttlHours);
+        long ttlMin = Long.parseLong(PropertiesUtil.getProperty("session_ttl"));
+        SESSION_TTL = Duration.ofMinutes(ttlMin);
         this.sessionRepository = new SessionRepository();
     }
 
@@ -28,6 +28,11 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public void deleteById(String id) {
         sessionRepository.deleteByKey(id);
+    }
+
+    @Override
+    public void deleteAllExpired(LocalDateTime current) {
+        sessionRepository.deleteExpiredSessions(current);
     }
 
     @Override

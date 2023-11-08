@@ -21,13 +21,9 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         WebContext webContext = new WebContext(request, response, getServletContext());
-
         UserResDto user = (UserResDto) request.getSession().getAttribute("user");
-
         webContext.setVariable("user", user);
-
         String output = templateEngine.process("index", webContext);
-        response.setContentType("text/html;charset=UTF-8");
         response.getWriter().write(output);
     }
 }

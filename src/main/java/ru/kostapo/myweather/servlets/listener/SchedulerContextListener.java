@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package ru.kostapo.myweather.servlets.listener;
 
 import ru.kostapo.myweather.service.SessionService;
@@ -40,4 +41,7 @@ public class SchedulerContextListener implements ServletContextListener {
             executor.shutdownNow();
         }
     }
+=======
+package ru.kostapo.myweather.servlets.listener;public class sheldelrredesign {
+>>>>>>> ae699ba0e4867b00518680e09a8533d0e5c98644
 }

@@ -22,7 +22,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public Optional<Session> findById(String id) {
-        return Optional.empty();
+        return sessionRepository.findByKey(id);
     }
 
     @Override

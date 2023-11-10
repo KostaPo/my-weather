@@ -4,7 +4,6 @@ import ru.kostapo.myweather.model.Session;
 import ru.kostapo.myweather.model.User;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 public interface SessionService {

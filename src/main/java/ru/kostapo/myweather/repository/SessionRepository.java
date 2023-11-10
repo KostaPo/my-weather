@@ -2,6 +2,7 @@ package ru.kostapo.myweather.repository;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import ru.kostapo.myweather.model.Session;
 import ru.kostapo.myweather.utils.HibernateUtil;
 
@@ -28,21 +29,22 @@ public class SessionRepository implements Repository<Session, String> {
 
     @Override
     public Optional<Session> findByKey(String uuid) {
+        Optional<Session> userSession;
         Transaction transaction = null;
         try (org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            Session userSession = session
-                    .createQuery("SELECT s FROM Session s WHERE s.id = :uuid", Session.class)
-                    .setParameter("uuid", uuid)
-                    .uniqueResult();
+            String hql = "SELECT s FROM Session s LEFT JOIN FETCH s.user WHERE s.id = :uuid";
+            Query<Session> query = session.createQuery(hql, Session.class);
+            query.setParameter("uuid", uuid);
+            userSession = Optional.ofNullable(query.uniqueResult());
             transaction.commit();
-            return Optional.ofNullable(userSession);
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new HibernateException("Can't find by uuid", e);
+            throw new HibernateException("Не удалось найти по uuid", e);
         }
+        return userSession;
     }
 
     @Override

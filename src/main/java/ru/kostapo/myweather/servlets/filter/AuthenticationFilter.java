@@ -1,8 +1,5 @@
 package ru.kostapo.myweather.servlets.filter;
 
-import ru.kostapo.myweather.service.SessionService;
-import ru.kostapo.myweather.service.SessionServiceImpl;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;

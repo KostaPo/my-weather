@@ -53,7 +53,7 @@ import java.util.Optional;
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new HibernateException("Can't save entity", e);
+            throw new HibernateException("Can't find entity", e);
         }
     }
 
@@ -73,4 +73,5 @@ import java.util.Optional;
                 throw new HibernateException("Can't delete user", e);
             }*/
         }
+
     }

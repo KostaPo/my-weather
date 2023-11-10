@@ -1,6 +1,5 @@
 package ru.kostapo.myweather.servlets.listener;
 
-import lombok.extern.slf4j.Slf4j;
 import ru.kostapo.myweather.service.SessionService;
 import ru.kostapo.myweather.service.SessionServiceImpl;
 import ru.kostapo.myweather.utils.PropertiesUtil;

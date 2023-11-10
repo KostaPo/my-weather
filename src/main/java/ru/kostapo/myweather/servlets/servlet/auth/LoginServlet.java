@@ -49,7 +49,6 @@ public class LoginServlet extends HttpServlet {
             long ttlMin = Long.parseLong(PropertiesUtil.getProperty("session_ttl"));
             cookie.setMaxAge((int) (ttlMin * 60));
             response.addCookie(cookie);
-            request.getSession().setAttribute("user", userResponse);
             response.sendRedirect("/");
         } catch (UserNotFoundException e) {
             BindingResult bindingResult = new BindingResult("login", e.getMessage());

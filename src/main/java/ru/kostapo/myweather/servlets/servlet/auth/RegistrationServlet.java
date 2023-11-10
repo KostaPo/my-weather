@@ -46,7 +46,6 @@ public class RegistrationServlet extends HttpServlet {
             long ttlMin = Long.parseLong(PropertiesUtil.getProperty("session_ttl"));
             cookie.setMaxAge((int) (ttlMin * 60));
             response.addCookie(cookie);
-            request.getSession().setAttribute("user", userResponse);
             response.sendRedirect("/");
         } catch (ValidConstraintViolationException e) {
             BindingResult bindingResult = new BindingResult(e.getConstraintViolations());

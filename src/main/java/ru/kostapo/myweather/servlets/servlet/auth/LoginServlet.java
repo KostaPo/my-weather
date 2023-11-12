@@ -7,7 +7,7 @@ import ru.kostapo.myweather.model.dto.UserReqDto;
 import ru.kostapo.myweather.model.dto.UserResDto;
 import ru.kostapo.myweather.exception.PasswordMismatchException;
 import ru.kostapo.myweather.exception.UserNotFoundException;
-import ru.kostapo.myweather.service.UserServiceImpl;
+import ru.kostapo.myweather.model.service.UserServiceImpl;
 import ru.kostapo.myweather.utils.PropertiesUtil;
 
 import javax.servlet.annotation.WebServlet;

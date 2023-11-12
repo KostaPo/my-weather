@@ -1,6 +1,14 @@
-database.url=jdbc:postgresql://localhost:5432/MyWeatherMainDB
-database.username=postgres
-database.password=10293847
+prod.database.url=jdbc:postgresql://localhost:5432/MyWeatherMainDB
+prod.database.username=postgres
+prod.database.password=10293847
+prod.driver_class=org.postgresql.Driver
+prod.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+test.database.url=jdbc:h2:mem:test;DATABASE_TO_UPPER=false
+test.database.username=usr
+test.database.password=pwd
+test.driver_class=org.h2.Driver
+test.dialect=org.hibernate.dialect.H2Dialect
 
 session_ttl=30
 

@@ -2,10 +2,9 @@ package ru.kostapo.myweather.servlets.servlet;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
-import ru.kostapo.myweather.model.User;
 import ru.kostapo.myweather.model.dto.UserResDto;
-import ru.kostapo.myweather.service.UserService;
-import ru.kostapo.myweather.service.UserServiceImpl;
+import ru.kostapo.myweather.model.service.UserService;
+import ru.kostapo.myweather.model.service.UserServiceImpl;
 
 import java.io.*;
 import javax.servlet.http.*;

@@ -1,7 +1,7 @@
 package ru.kostapo.myweather.servlets.listener;
 
-import ru.kostapo.myweather.service.SessionService;
-import ru.kostapo.myweather.service.SessionServiceImpl;
+import ru.kostapo.myweather.model.service.SessionService;
+import ru.kostapo.myweather.model.service.SessionServiceImpl;
 import ru.kostapo.myweather.utils.PropertiesUtil;
 
 import javax.servlet.ServletContextEvent;

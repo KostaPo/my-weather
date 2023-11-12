@@ -1,4 +1,4 @@
-package ru.kostapo.myweather.service;
+package ru.kostapo.myweather.model.service;
 
 import ru.kostapo.myweather.model.Session;
 import ru.kostapo.myweather.model.User;

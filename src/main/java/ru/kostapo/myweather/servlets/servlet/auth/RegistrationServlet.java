@@ -7,7 +7,7 @@ import ru.kostapo.myweather.exception.BindingResult;
 import ru.kostapo.myweather.model.dto.UserResDto;
 import ru.kostapo.myweather.exception.UniqConstraintViolationException;
 import ru.kostapo.myweather.exception.ValidConstraintViolationException;
-import ru.kostapo.myweather.service.UserServiceImpl;
+import ru.kostapo.myweather.model.service.UserServiceImpl;
 import ru.kostapo.myweather.utils.PropertiesUtil;
 
 import javax.servlet.annotation.WebServlet;

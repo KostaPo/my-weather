@@ -4,7 +4,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.query.Query;
 import ru.kostapo.myweather.exception.UniqConstraintViolationException;
 import ru.kostapo.myweather.model.User;
 import ru.kostapo.myweather.utils.HibernateUtil;
@@ -59,19 +58,6 @@ import java.util.Optional;
 
         @Override
         public void deleteByKey(String login) {
-            /*Transaction transaction = null;
-            try (org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession()) {
-                transaction = session.beginTransaction();
-                Query<?> query = session.createQuery("DELETE FROM User WHERE login = :login");
-                query.setParameter("login", login);
-                query.executeUpdate();
-                transaction.commit();
-            } catch (Exception e) {
-                if (transaction != null) {
-                    transaction.rollback();
-                }
-                throw new HibernateException("Can't delete user", e);
-            }*/
         }
 
     }

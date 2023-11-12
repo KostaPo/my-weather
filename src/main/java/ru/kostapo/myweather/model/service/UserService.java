@@ -1,9 +1,7 @@
-package ru.kostapo.myweather.service;
+package ru.kostapo.myweather.model.service;
 
 import ru.kostapo.myweather.model.dto.UserReqDto;
 import ru.kostapo.myweather.model.dto.UserResDto;
-
-import java.util.Optional;
 
 
 public interface UserService {

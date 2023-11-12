@@ -1,12 +1,8 @@
 package ru.kostapo.myweather.servlets.filter;
 
-import org.hibernate.Hibernate;
 import ru.kostapo.myweather.model.Session;
-import ru.kostapo.myweather.model.User;
-import ru.kostapo.myweather.model.dto.UserResDto;
-import ru.kostapo.myweather.model.mapper.UserMapper;
-import ru.kostapo.myweather.service.SessionService;
-import ru.kostapo.myweather.service.SessionServiceImpl;
+import ru.kostapo.myweather.model.service.SessionService;
+import ru.kostapo.myweather.model.service.SessionServiceImpl;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

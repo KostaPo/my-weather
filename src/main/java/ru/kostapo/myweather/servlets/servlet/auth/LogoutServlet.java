@@ -1,7 +1,7 @@
 package ru.kostapo.myweather.servlets.servlet.auth;
 
-import ru.kostapo.myweather.service.SessionService;
-import ru.kostapo.myweather.service.SessionServiceImpl;
+import ru.kostapo.myweather.model.service.SessionService;
+import ru.kostapo.myweather.model.service.SessionServiceImpl;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;

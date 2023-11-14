@@ -1,7 +1,7 @@
 package ru.kostapo.myweather.servlets.listener;
 
-import ru.kostapo.myweather.model.service.SessionService;
-import ru.kostapo.myweather.model.service.SessionServiceImpl;
+import ru.kostapo.myweather.model.dao.SessionDAO;
+import ru.kostapo.myweather.utils.HibernateUtil;
 import ru.kostapo.myweather.utils.PropertiesUtil;
 
 import javax.servlet.ServletContextEvent;
@@ -22,11 +22,11 @@ public class SchedulerContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        SessionService sessionService = new SessionServiceImpl();
+        SessionDAO sessionDAO = new SessionDAO(HibernateUtil.getSessionFactory());
         executor = Executors.newScheduledThreadPool(poolSize);
         Runnable task = () -> {
             try {
-                sessionService.deleteAllExpired(LocalDateTime.now());
+                sessionDAO.deleteExpiredSessions(LocalDateTime.now());
             } catch (Exception e) {
                 throw new RuntimeException("Scheduled Task Exception", e);
             }

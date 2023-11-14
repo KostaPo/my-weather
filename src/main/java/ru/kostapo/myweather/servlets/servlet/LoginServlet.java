@@ -1,17 +1,16 @@
-package ru.kostapo.myweather.servlets.servlet.auth;
+package ru.kostapo.myweather.servlets.servlet;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import ru.kostapo.myweather.exception.BindingResult;
+import ru.kostapo.myweather.model.Session;
 import ru.kostapo.myweather.model.dto.UserReqDto;
-import ru.kostapo.myweather.model.dto.UserResDto;
 import ru.kostapo.myweather.exception.PasswordMismatchException;
 import ru.kostapo.myweather.exception.UserNotFoundException;
-import ru.kostapo.myweather.model.service.UserServiceImpl;
-import ru.kostapo.myweather.utils.PropertiesUtil;
+import ru.kostapo.myweather.service.AuthorizationService;
+import ru.kostapo.myweather.utils.HibernateUtil;
 
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,12 +19,12 @@ import java.io.IOException;
 @WebServlet(name = "LoginServlet", value = "/signin")
 public class LoginServlet extends HttpServlet {
 
-    private UserServiceImpl userServiceImpl;
+    private AuthorizationService authService;
     private TemplateEngine templateEngine;
 
     @Override
     public void init() {
-        userServiceImpl = new UserServiceImpl();
+        authService = new AuthorizationService(HibernateUtil.getSessionFactory());
         templateEngine = (TemplateEngine) getServletContext().getAttribute("templateEngine");
     }
 
@@ -44,11 +43,8 @@ public class LoginServlet extends HttpServlet {
                 .password(request.getParameter("password"))
                 .build();
         try {
-            UserResDto userResponse = userServiceImpl.userLogin(userRequest);
-            Cookie cookie = new Cookie("session_id", userResponse.getSession_id());
-            long ttlMin = Long.parseLong(PropertiesUtil.getProperty("session_ttl"));
-            cookie.setMaxAge((int) (ttlMin * 60));
-            response.addCookie(cookie);
+            Session session = authService.login(userRequest);
+            response.addCookie(authService.getNewCookie(session));
             response.sendRedirect("/");
         } catch (UserNotFoundException e) {
             BindingResult bindingResult = new BindingResult("login", e.getMessage());

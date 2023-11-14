@@ -1,14 +1,14 @@
-package ru.kostapo.myweather.servlets.servlet.auth;
+package ru.kostapo.myweather.servlets.servlet;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
+import ru.kostapo.myweather.model.Session;
 import ru.kostapo.myweather.model.dto.UserReqDto;
 import ru.kostapo.myweather.exception.BindingResult;
-import ru.kostapo.myweather.model.dto.UserResDto;
 import ru.kostapo.myweather.exception.UniqConstraintViolationException;
 import ru.kostapo.myweather.exception.ValidConstraintViolationException;
-import ru.kostapo.myweather.model.service.UserServiceImpl;
-import ru.kostapo.myweather.utils.PropertiesUtil;
+import ru.kostapo.myweather.service.AuthorizationService;
+import ru.kostapo.myweather.utils.HibernateUtil;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -18,11 +18,12 @@ import java.io.IOException;
 public class RegistrationServlet extends HttpServlet {
 
     private TemplateEngine templateEngine;
-    private UserServiceImpl userServiceImpl;
+
+    private AuthorizationService authService;
 
     @Override
     public void init() {
-        userServiceImpl = new UserServiceImpl();
+        authService = new AuthorizationService(HibernateUtil.getSessionFactory());
         templateEngine = (TemplateEngine) getServletContext().getAttribute("templateEngine");
     }
 
@@ -41,11 +42,8 @@ public class RegistrationServlet extends HttpServlet {
                 .password(request.getParameter("password"))
                 .build();
         try {
-            UserResDto userResponse = userServiceImpl.userRegistration(userRequest);
-            Cookie cookie = new Cookie("session_id", userResponse.getSession_id());
-            long ttlMin = Long.parseLong(PropertiesUtil.getProperty("session_ttl"));
-            cookie.setMaxAge((int) (ttlMin * 60));
-            response.addCookie(cookie);
+            Session session = authService.userRegistration(userRequest);
+            response.addCookie(authService.getNewCookie(session));
             response.sendRedirect("/");
         } catch (ValidConstraintViolationException e) {
             BindingResult bindingResult = new BindingResult(e.getConstraintViolations());

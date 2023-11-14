@@ -1,46 +1,51 @@
-package ru.kostapo.myweather.repository;
+package ru.kostapo.myweather.model.dao;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
 import ru.kostapo.myweather.exception.UniqConstraintViolationException;
+import ru.kostapo.myweather.exception.UserNotFoundException;
 import ru.kostapo.myweather.model.User;
-import ru.kostapo.myweather.utils.HibernateUtil;
 
 import javax.persistence.PersistenceException;
 import java.util.Optional;
 
-    public class UserRepository implements Repository<User, String> {
+public class UserDAO {
 
-    @Override
-    public User save(User entity) {
+    private final SessionFactory sessionFactory;
+
+    public UserDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public User save(User user) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            session.save(entity);
+            session.save(user);
             transaction.commit();
-            return entity;
+            return user;
         } catch (PersistenceException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
             if (e.getCause() instanceof ConstraintViolationException) {
-                throw new UniqConstraintViolationException("НАРУШЕНИЕ ОГРАНИЧЕНИЙ УНИКАЛЬНОСТИ");
+                throw new UniqConstraintViolationException("Нарушение ограничений уникальности");
             }
             return null;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new HibernateException("Can't save entity", e);
+            throw new HibernateException("Невозможно сохранить юзера", e);
         }
     }
 
-    @Override
-    public Optional<User> findByKey(String login) {
+    public Optional<User> findByLogin(String login) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             User user = session
                     .createQuery("SELECT u FROM User u LEFT JOIN FETCH u.sessions WHERE u.login = :login", User.class)
@@ -52,12 +57,7 @@ import java.util.Optional;
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new HibernateException("Can't find entity", e);
+            throw new UserNotFoundException("Невозможно найти по логину");
         }
     }
-
-        @Override
-        public void deleteByKey(String login) {
-        }
-
-    }
+}

@@ -12,7 +12,7 @@ import ru.kostapo.myweather.utils.PropertiesUtil;
 
 import java.util.Properties;
 
-public class HibernateUtil {
+public class TestHibernateUtil {
 
     private static final SessionFactory sessionFactory;
 

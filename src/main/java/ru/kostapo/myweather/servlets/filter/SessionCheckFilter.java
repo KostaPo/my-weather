@@ -1,8 +1,8 @@
 package ru.kostapo.myweather.servlets.filter;
 
 import ru.kostapo.myweather.model.Session;
-import ru.kostapo.myweather.model.service.SessionService;
-import ru.kostapo.myweather.model.service.SessionServiceImpl;
+import ru.kostapo.myweather.model.dao.SessionDAO;
+import ru.kostapo.myweather.utils.HibernateUtil;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -15,12 +15,11 @@ import java.util.Optional;
 @WebFilter(urlPatterns = "/*")
 public class SessionCheckFilter implements Filter {
 
-    private SessionService sessionService;
-
+    private SessionDAO sessionDAO;
 
     @Override
     public void init(FilterConfig filterConfig)  {
-        this.sessionService = new SessionServiceImpl();
+        sessionDAO = new SessionDAO(HibernateUtil.getSessionFactory());
     }
 
     @Override
@@ -32,7 +31,7 @@ public class SessionCheckFilter implements Filter {
         String session_id = getSessionFromCookies(request);
 
         if (session_id != null) {
-            Optional<Session> session = sessionService.findById(session_id);
+            Optional<Session> session = sessionDAO.findById(session_id);
             if(session.isPresent()) {
                 request.getSession().setAttribute("user_login", session.get().getUser().getLogin());
             } else {

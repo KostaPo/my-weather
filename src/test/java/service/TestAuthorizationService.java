@@ -3,22 +3,29 @@ package service;
 import org.h2.tools.Server;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.junit.jupiter.api.*;
-import util.HibernateUtil;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import ru.kostapo.myweather.service.AuthorizationService;
+import util.TestHibernateUtil;
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
-public class TestHibernateConnection {
+public class TestAuthorizationService {
 
     private static Server tcpServer;
-    static SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
+    private static AuthorizationService authService;
+
 
     @BeforeAll
     public static void init() {
-        sessionFactory = HibernateUtil.getSessionFactory();
+        sessionFactory = TestHibernateUtil.getSessionFactory();
+        authService = new AuthorizationService(sessionFactory);
         try {
             tcpServer = Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9092");
             tcpServer.start();
@@ -74,4 +81,5 @@ public class TestHibernateConnection {
         }
 
     }*/
+
 }

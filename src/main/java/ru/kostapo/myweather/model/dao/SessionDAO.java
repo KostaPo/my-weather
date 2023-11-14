@@ -1,20 +1,25 @@
-package ru.kostapo.myweather.repository;
+package ru.kostapo.myweather.model.dao;
 
 import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import ru.kostapo.myweather.model.Session;
-import ru.kostapo.myweather.utils.HibernateUtil;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public class SessionRepository implements Repository<Session, String> {
+public class SessionDAO {
 
-    @Override
+    private final SessionFactory sessionFactory;
+
+    public SessionDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     public Session save(Session entity) {
         Transaction transaction = null;
-        try (org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (org.hibernate.Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.save(entity);
             transaction.commit();
@@ -23,15 +28,14 @@ public class SessionRepository implements Repository<Session, String> {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new HibernateException("Can't save entity", e);
+            throw new HibernateException("Невозможно сохранить сессию", e);
         }
     }
 
-    @Override
-    public Optional<Session> findByKey(String uuid) {
+    public Optional<Session> findById(String uuid) {
         Optional<Session> userSession;
         Transaction transaction = null;
-        try (org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (org.hibernate.Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             String hql = "SELECT s FROM Session s LEFT JOIN FETCH s.user WHERE s.id = :uuid";
             Query<Session> query = session.createQuery(hql, Session.class);
@@ -47,10 +51,9 @@ public class SessionRepository implements Repository<Session, String> {
         return userSession;
     }
 
-    @Override
-    public void deleteByKey(String uuid) {
+    public void deleteById(String uuid) {
         Transaction transaction = null;
-        try (org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (org.hibernate.Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.createQuery("DELETE FROM Session WHERE id = :uuid")
                     .setParameter("uuid", uuid)
@@ -66,7 +69,7 @@ public class SessionRepository implements Repository<Session, String> {
 
     public void deleteExpiredSessions(LocalDateTime currentTime) {
         Transaction transaction = null;
-        try (org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (org.hibernate.Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             String queryString = "DELETE FROM Session WHERE expiresAt < :currentTime";
             session.createQuery(queryString)

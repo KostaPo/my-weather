@@ -71,7 +71,7 @@ public class SessionDAO {
         Transaction transaction = null;
         try (org.hibernate.Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            String queryString = "DELETE FROM Session WHERE expiresAt < :currentTime";
+            String queryString = "DELETE FROM Session WHERE expiresAt <= :currentTime";
             session.createQuery(queryString)
                     .setParameter("currentTime", currentTime)
                     .executeUpdate();

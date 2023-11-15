@@ -17,6 +17,7 @@
           <option value="org.webjars:bootstrap" />
           <option value="org.hibernate.validator:hibernate-validator" />
           <option value="org.mapstruct:mapstruct" />
+          <option value="javax.el:javax.el-api" />
         </list>
       </option>
     </inspection_tool>

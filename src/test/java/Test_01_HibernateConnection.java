@@ -9,27 +9,14 @@ import java.math.BigInteger;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class TestHibernateConnection {
+public class Test_01_HibernateConnection {
 
     private static SessionFactory sessionFactory;
-
 
     @BeforeAll
     public static void init() {
         sessionFactory = TestHibernateUtil.getSessionFactory();
     }
-
-    /*@AfterAll
-    public static void tearDown() {
-        if (tcpServer != null) {
-            tcpServer.stop();
-            tcpServer.shutdown();
-        }
-        if (sessionFactory != null) {
-            sessionFactory.close();
-            sessionFactory = null;
-        }
-    }*/
 
     @Test
     @Order(1)
@@ -65,6 +52,18 @@ public class TestHibernateConnection {
     public void test04_sessionsTableExist() {
         try (Session session = sessionFactory.openSession()) {
             String sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'sessions'";
+            NativeQuery<?> query = session.createNativeQuery(sql);
+            BigInteger result = (BigInteger) query.uniqueResult();
+            assertEquals(1, result.intValue());
+        }
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("Таблица locations создана")
+    public void test05_locationsTableExist() {
+        try (Session session = sessionFactory.openSession()) {
+            String sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'locations'";
             NativeQuery<?> query = session.createNativeQuery(sql);
             BigInteger result = (BigInteger) query.uniqueResult();
             assertEquals(1, result.intValue());

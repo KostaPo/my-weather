@@ -9,7 +9,6 @@ import ru.kostapo.myweather.model.User;
 import ru.kostapo.myweather.model.dao.*;
 import ru.kostapo.myweather.model.dto.UserReqDto;
 import ru.kostapo.myweather.model.mapper.UserMapper;
-import ru.kostapo.myweather.utils.HibernateUtil;
 import ru.kostapo.myweather.utils.PasswordUtil;
 import ru.kostapo.myweather.utils.PropertiesUtil;
 import ru.kostapo.myweather.utils.ValidationUtil;
@@ -38,8 +37,8 @@ public class AuthorizationService {
 
     public Session login(UserReqDto userRequest) {
         Optional<User> user = userDAO.findByLogin(userRequest.getLogin());
-        if(user.isPresent()) {
-            if(PasswordUtil.checkPassword(userRequest.getPassword(), user.get().getPassword())) {
+        if (user.isPresent()) {
+            if (PasswordUtil.checkPassword(userRequest.getPassword(), user.get().getPassword())) {
                 Session newSession = getNewSession(user.get());
                 return sessionDAO.save(newSession);
             }
@@ -48,9 +47,9 @@ public class AuthorizationService {
         throw new UserNotFoundException("Не верный логин");
     }
 
-    public Session userRegistration (UserReqDto userReqDto) {
+    public Session userRegistration(UserReqDto userReqDto) {
         User user = UserMapper.INSTANCE.toModel(userReqDto);
-        if(isUserValid(user)) {
+        if (isUserValid(user)) {
             user.setPassword(PasswordUtil.hashPassword(userReqDto.getPassword()));
         }
         Session session = getNewSession(user);
@@ -63,21 +62,6 @@ public class AuthorizationService {
         Cookie cookie = new Cookie("session_id", session.getId());
         cookie.setMaxAge((int) (SESSION_TTL.toMinutes() * 60));
         return cookie;
-    }
-
-    private Session getNewSession(User user) {
-        Session session = new Session();
-        session.setUser(user);
-        session.setExpiresAt(LocalDateTime.now().plus(SESSION_TTL));
-        return session;
-    }
-
-    private boolean isUserValid(User user) {
-        Set<ConstraintViolation<User>> violations = ValidationUtil.getValidator().validate(user);
-        if(!violations.isEmpty()) {
-            throw new ValidConstraintViolationException("Нарушение ограничений валидации", violations);
-        }
-        return true;
     }
 
     public void logout(HttpServletRequest request, HttpServletResponse response) {
@@ -93,5 +77,24 @@ public class AuthorizationService {
                 }
             }
         }
+    }
+
+    public void deleteExpiredSessions(LocalDateTime currentTime) {
+        sessionDAO.deleteExpiredSessions(currentTime);
+    }
+
+    private Session getNewSession(User user) {
+        Session session = new Session();
+        session.setUser(user);
+        session.setExpiresAt(LocalDateTime.now().plus(SESSION_TTL));
+        return session;
+    }
+
+    private boolean isUserValid(User user) {
+        Set<ConstraintViolation<User>> violations = ValidationUtil.getValidator().validate(user);
+        if (!violations.isEmpty()) {
+            throw new ValidConstraintViolationException("Нарушение ограничений валидации", violations);
+        }
+        return true;
     }
 }

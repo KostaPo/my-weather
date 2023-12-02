@@ -6,6 +6,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
+import ru.kostapo.myweather.exception.OpenWeatherException;
 import ru.kostapo.myweather.model.Location;
 import ru.kostapo.myweather.model.api.LocationApiRes;
 import ru.kostapo.myweather.model.api.WeatherApiRes;
@@ -32,23 +33,34 @@ public class OpenWeatherService {
     public List<LocationApiRes> getLocationsByName(String name) {
         HttpGet httpGet = new HttpGet(getUriForGeocodingRequest(name));
         try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode >= 400) {
+                throw new OpenWeatherException("OpenWeatherApiException");
+            }
             String responseBody = EntityUtils.toString(response.getEntity());
-            return objectMapper.readValue(responseBody, new TypeReference<List<LocationApiRes>>() {});
+            return objectMapper.readValue(responseBody, new TypeReference<List<LocationApiRes>>() {
+            });
+        } catch (OpenWeatherException e) {
+            throw new OpenWeatherException("OpenWeatherApiException");
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Ошибка Сети", e);
         }
-        return null;
     }
 
     public WeatherApiRes getWeatherForLocation(Location location) {
         HttpGet httpGet = new HttpGet(getUriForWeatherRequest(location));
         try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode >= 400) {
+                throw new OpenWeatherException("OpenWeatherApiException");
+            }
             String responseBody = EntityUtils.toString(response.getEntity());
             return objectMapper.readValue(responseBody, WeatherApiRes.class);
+        } catch (OpenWeatherException e) {
+            throw new OpenWeatherException("OpenWeatherApiException");
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Ошибка Сети", e);
         }
-        return null;
     }
 
     private URI getUriForGeocodingRequest(String locationName) {

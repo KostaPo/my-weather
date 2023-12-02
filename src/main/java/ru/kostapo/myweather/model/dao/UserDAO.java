@@ -28,7 +28,7 @@ public class UserDAO {
             transaction.commit();
             return user;
         } catch (PersistenceException e) {
-            if (transaction != null) {
+            if (transaction.isActive()) {
                 transaction.rollback();
             }
             if (e.getCause() instanceof ConstraintViolationException) {
@@ -36,7 +36,7 @@ public class UserDAO {
             }
             return null;
         } catch (Exception e) {
-            if (transaction != null) {
+            if (transaction.isActive()) {
                 transaction.rollback();
             }
             throw new HibernateException("Невозможно сохранить юзера", e);
@@ -54,7 +54,7 @@ public class UserDAO {
             transaction.commit();
             return Optional.ofNullable(user);
         } catch (Exception e) {
-            if (transaction != null) {
+            if (transaction.isActive()) {
                 transaction.rollback();
             }
             throw new UserNotFoundException("Невозможно найти по логину");

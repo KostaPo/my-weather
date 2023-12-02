@@ -25,7 +25,7 @@ public class SessionDAO {
             transaction.commit();
             return entity;
         } catch (Exception e) {
-            if (transaction != null) {
+            if (transaction.isActive()) {
                 transaction.rollback();
             }
             throw new HibernateException("Невозможно сохранить сессию", e);
@@ -43,7 +43,7 @@ public class SessionDAO {
             userSession = Optional.ofNullable(query.uniqueResult());
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
+            if (transaction.isActive()) {
                 transaction.rollback();
             }
             throw new HibernateException("Не удалось найти по uuid", e);
@@ -60,7 +60,7 @@ public class SessionDAO {
                     .executeUpdate();
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
+            if (transaction.isActive()) {
                 transaction.rollback();
             }
             throw new HibernateException("Can't delete session", e);
@@ -77,7 +77,7 @@ public class SessionDAO {
                     .executeUpdate();
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
+            if (transaction.isActive()) {
                 transaction.rollback();
             }
             throw new HibernateException("Can't delete exp session", e);

@@ -47,7 +47,7 @@ public class AuthorizationService {
         throw new UserNotFoundException("Не верный логин");
     }
 
-    public Session userRegistration(UserReqDto userReqDto) {
+    public Session registration(UserReqDto userReqDto) {
         User user = UserMapper.INSTANCE.toModel(userReqDto);
         if (isUserValid(user)) {
             user.setPassword(PasswordUtil.hashPassword(userReqDto.getPassword()));

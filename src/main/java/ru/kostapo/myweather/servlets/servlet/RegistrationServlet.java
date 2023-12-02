@@ -42,7 +42,7 @@ public class RegistrationServlet extends HttpServlet {
                 .password(request.getParameter("password"))
                 .build();
         try {
-            Session session = authService.userRegistration(userRequest);
+            Session session = authService.registration(userRequest);
             response.addCookie(authService.getNewCookie(session));
             response.sendRedirect("/");
         } catch (ValidConstraintViolationException e) {

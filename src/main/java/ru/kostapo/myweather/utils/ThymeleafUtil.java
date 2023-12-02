@@ -6,7 +6,6 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.servlet.ServletContext;
 
-
 public class ThymeleafUtil {
 
     private static TemplateEngine templateEngine;

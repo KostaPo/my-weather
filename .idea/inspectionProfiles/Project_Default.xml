@@ -18,6 +18,8 @@
           <option value="org.hibernate.validator:hibernate-validator" />
           <option value="org.mapstruct:mapstruct" />
           <option value="javax.el:javax.el-api" />
+          <option value="org.apache.httpcomponents:httpclient" />
+          <option value="com.fasterxml.jackson.core:jackson-databind" />
         </list>
       </option>
     </inspection_tool>

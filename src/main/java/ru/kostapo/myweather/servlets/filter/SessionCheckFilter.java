@@ -2,6 +2,7 @@ package ru.kostapo.myweather.servlets.filter;
 
 import ru.kostapo.myweather.model.Session;
 import ru.kostapo.myweather.model.dao.SessionDAO;
+import ru.kostapo.myweather.service.AuthorizationService;
 import ru.kostapo.myweather.utils.HibernateUtil;
 
 import javax.servlet.*;
@@ -17,9 +18,12 @@ public class SessionCheckFilter implements Filter {
 
     private SessionDAO sessionDAO;
 
+    private AuthorizationService authService;
+
     @Override
     public void init(FilterConfig filterConfig)  {
         sessionDAO = new SessionDAO(HibernateUtil.getSessionFactory());
+        authService = new AuthorizationService(HibernateUtil.getSessionFactory());
     }
 
     @Override
@@ -35,10 +39,7 @@ public class SessionCheckFilter implements Filter {
             if(session.isPresent()) {
                 request.getSession().setAttribute("user_login", session.get().getUser().getLogin());
             } else {
-                Cookie cleaningCookies = new Cookie("session_id", null);
-                cleaningCookies.setMaxAge(0);
-                response.addCookie(cleaningCookies);
-                request.getSession().invalidate();
+                authService.logout(request, response);
                 response.sendRedirect("/signin");
                 return;
             }
@@ -58,5 +59,4 @@ public class SessionCheckFilter implements Filter {
         }
         return null;
     }
-
 }

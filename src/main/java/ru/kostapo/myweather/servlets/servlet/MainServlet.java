@@ -3,10 +3,14 @@ package ru.kostapo.myweather.servlets.servlet;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import ru.kostapo.myweather.exception.UserNotFoundException;
+import ru.kostapo.myweather.model.Location;
 import ru.kostapo.myweather.model.User;
 import ru.kostapo.myweather.model.dao.UserDAO;
 import ru.kostapo.myweather.model.dto.UserResDto;
+import ru.kostapo.myweather.model.api.LocationApiRes;
+import ru.kostapo.myweather.model.api.WeatherApiRes;
 import ru.kostapo.myweather.model.mapper.UserMapper;
+import ru.kostapo.myweather.service.OpenWeatherService;
 import ru.kostapo.myweather.utils.HibernateUtil;
 
 import java.io.*;
@@ -17,11 +21,13 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "MainServlet", value = "/")
 public class MainServlet extends HttpServlet {
 
+    private OpenWeatherService weatherService;
     private TemplateEngine templateEngine;
     private UserDAO userDAO;
 
     @Override
     public void init() {
+        weatherService = new OpenWeatherService();
         userDAO = new UserDAO(HibernateUtil.getSessionFactory());
         templateEngine = (TemplateEngine) getServletContext().getAttribute("templateEngine");
     }

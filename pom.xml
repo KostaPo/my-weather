@@ -25,6 +25,8 @@
         <jbcrypt.version>0.4</jbcrypt.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <h2database.version>2.1.214</h2database.version>
+        <httpclient.version>4.5.13</httpclient.version>
+        <jackson.version>2.13.0</jackson.version>
         <junit.version>5.9.2</junit.version>
     </properties>
 
@@ -79,6 +81,16 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2database.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

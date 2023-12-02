@@ -59,7 +59,7 @@ public class Test_01_HibernateConnection {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     @DisplayName("Таблица locations создана")
     public void test05_locationsTableExist() {
         try (Session session = sessionFactory.openSession()) {

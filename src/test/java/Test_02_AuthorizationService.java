@@ -58,7 +58,7 @@ public class Test_02_AuthorizationService {
                 .login("testUsr")
                 .password("testPwd")
                 .build();
-        Session tmpSession = authService.userRegistration(testUserRequest);
+        Session tmpSession = authService.registration(testUserRequest);
         User tmpUser = tmpSession.getUser();
 
         assertNotNull(tmpSession);
@@ -81,10 +81,10 @@ public class Test_02_AuthorizationService {
                 .login("testUsr")
                 .password("testPwd")
                 .build();
-        authService.userRegistration(testUserRequest);
+        authService.registration(testUserRequest);
 
         assertThrows(UniqConstraintViolationException.class,
-                () -> authService.userRegistration(testUserRequest));
+                () -> authService.registration(testUserRequest));
     }
 
     @Test
@@ -97,7 +97,7 @@ public class Test_02_AuthorizationService {
                 .build();
 
         assertThrows(ValidConstraintViolationException.class,
-                () -> authService.userRegistration(testUserRequest));
+                () -> authService.registration(testUserRequest));
     }
 
     @Test
@@ -108,7 +108,7 @@ public class Test_02_AuthorizationService {
                 .login("testUsr")
                 .password("testPwd")
                 .build();
-        authService.userRegistration(testUserRequest);
+        authService.registration(testUserRequest);
 
         Session tmpSession = authService.login(testUserRequest);
         User tmpUser = tmpSession.getUser();
@@ -125,7 +125,7 @@ public class Test_02_AuthorizationService {
                 .login("testUsr")
                 .password("testPwd")
                 .build();
-        authService.userRegistration(testUserRequest);
+        authService.registration(testUserRequest);
 
         UserReqDto testUserRequest2 = UserReqDto.builder()
                 .login("wrong_login")
@@ -144,7 +144,7 @@ public class Test_02_AuthorizationService {
                 .login("testUsr")
                 .password("testPwd")
                 .build();
-        authService.userRegistration(testUserRequest);
+        authService.registration(testUserRequest);
 
         UserReqDto testUserRequest2 = UserReqDto.builder()
                 .login("testUsr")
@@ -163,7 +163,7 @@ public class Test_02_AuthorizationService {
                 .login("testUsr")
                 .password("testPwd")
                 .build();
-        Session session = authService.userRegistration(testUserRequest);
+        Session session = authService.registration(testUserRequest);
         Duration difference = Duration.between(LocalDateTime.now(), session.getExpiresAt());
         long differenceMinutes = difference.toMinutes();
         long expectedDifference = 30;
@@ -180,7 +180,7 @@ public class Test_02_AuthorizationService {
                 .login("testUsr")
                 .password("testPwd")
                 .build();
-        Session session = authService.userRegistration(testUserRequest);
+        Session session = authService.registration(testUserRequest);
         authService.deleteExpiredSessions(LocalDateTime.now().plusMinutes(30));
         Optional<Session> persistSession = sessionDAO.findById(session.getId());
 

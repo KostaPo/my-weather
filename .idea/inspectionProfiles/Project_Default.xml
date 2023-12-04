@@ -20,6 +20,7 @@
           <option value="javax.el:javax.el-api" />
           <option value="org.apache.httpcomponents:httpclient" />
           <option value="com.fasterxml.jackson.core:jackson-databind" />
+          <option value="org.mockito:mockito-core" />
         </list>
       </option>
     </inspection_tool>

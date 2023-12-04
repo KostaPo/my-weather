@@ -1,4 +1,4 @@
-package ru.kostapo.myweather.service;
+package ru.kostapo.myweather.servlets.servlet.service;
 
 import org.hibernate.SessionFactory;
 import ru.kostapo.myweather.exception.PasswordMismatchException;

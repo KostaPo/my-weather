@@ -1,4 +1,4 @@
-package ru.kostapo.myweather.service;
+package ru.kostapo.myweather.servlets.servlet.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,7 +10,6 @@ import ru.kostapo.myweather.exception.OpenWeatherException;
 import ru.kostapo.myweather.model.Location;
 import ru.kostapo.myweather.model.api.LocationApiRes;
 import ru.kostapo.myweather.model.api.WeatherApiRes;
-import ru.kostapo.myweather.utils.HttpClientUtil;
 
 import java.net.URI;
 import java.util.List;
@@ -25,9 +24,9 @@ public class OpenWeatherService {
     private static final String GEOCODING_API_URL_SUFFIX = "/geo/1.0/direct";
     private static final String WEATHER_API_URL_SUFFIX = "/data/2.5/weather";
 
-    public OpenWeatherService() {
+    public OpenWeatherService(CloseableHttpClient client) {
         objectMapper = new ObjectMapper();
-        httpClient = HttpClientUtil.getHttpClient();
+        httpClient = client;
     }
 
     public List<LocationApiRes> getLocationsByName(String name) {

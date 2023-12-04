@@ -2,7 +2,7 @@ package ru.kostapo.myweather.servlets.filter;
 
 import ru.kostapo.myweather.model.Session;
 import ru.kostapo.myweather.model.dao.SessionDAO;
-import ru.kostapo.myweather.service.AuthorizationService;
+import ru.kostapo.myweather.servlets.servlet.service.AuthorizationService;
 import ru.kostapo.myweather.utils.HibernateUtil;
 
 import javax.servlet.*;

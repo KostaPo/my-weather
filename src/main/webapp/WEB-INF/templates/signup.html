@@ -3,7 +3,7 @@
     <th:block th:include="fragments/common :: head"/>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 <!-- HEADER -->
 <header>
     <th:block th:include="fragments/common :: header"/>
@@ -12,7 +12,7 @@
 <!-- SIGNUP FORM -->
 <div class="container-fluid mt-5">
     <div class="d-flex justify-content-center">
-        <div class="col-md-10 p-3 rounded border border-5 border-dark">
+        <div class="col-md-10 p-3 rounded border border-dark">
             <form action="#" method="post" th:action="@{/signup}">
                 <div class="d-flex justify-content-center">
                     <div class="form-group row">
@@ -61,7 +61,7 @@
 
 
 <!-- FOOTER -->
-<footer>
+<footer class="mt-auto">
     <th:block th:include="fragments/common :: footer"/>
 </footer>
 </body>

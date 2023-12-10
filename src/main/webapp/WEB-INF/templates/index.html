@@ -1,25 +1,107 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      xmlns:min-height="http://www.w3.org/1999/xhtml">
+
 <head>
     <th:block th:include="fragments/common :: head"/>
 </head>
-<body>
 
+<body class="d-flex flex-column min-vh-100">
 <!-- HEADER -->
 <header>
     <th:block th:include="fragments/common :: header"/>
 </header>
 
-<h1>Привет, <span th:text="${user.getLogin()}"></span>!</h1>
+<!-- USER LINE -->
+<div class="container mt-3 mb-3">
+    <div class="row">
+        <div class="col-sm text-center">
+            <h1 class="text">
+                <span th:text="'Hello, ' + ${user.getLogin()}"></span>!
+            </h1>
+        </div>
+        <div class="col-sm text-center">
+            <div class="input-group rounded">
+                <input class="form-control" type="search" placeholder="Search">
+                <button type="submit" class="btn btn-secondary"
+                        style="background-color: var(--grey_col); color: var(--black_col);">
+                    <i class="icon-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-sm text-center">
+            <form action="/logout" method="post">
+                <button type="submit" class="btn btn-secondary"
+                        style="background-color: var(--grey_col); color: var(--black_col);">Выйти
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 
-<form action="/logout" method="post">
-    <button type="submit">Выйти</button>
-</form>
+<!-- LOCATIONS -->
+<div class="main-content mt-3 mb-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-sm-6 rounded border border-dark">
+                Some quick example text to build on the card title and make up the bulk of the card's content.Some quick
+                example text to build on the card title and make up the bulk of the card's content.Some quick example
+                text to build on the card title and make up the bulk of the card's content.
+            </div>
+            <div class="col-lg-4 col-sm-6 rounded border border-dark">
+                Some quick example text to build on the card title and make up the bulk of the card's content.Some quick
+                example text to build on the card title and make up the bulk of the card's content.Some quick example
+                text to build on the card title and make up the bulk of the card's content.
+            </div>
+            <div class="col-lg-4 col-sm-6 rounded border border-dark">
+                Some quick example text to build on the card title and make up the bulk of the card's content.Some quick
+                example text to build on the card title and make up the bulk of the card's content.Some quick example
+                text to build on the card title and make up the bulk of the card's content.
+            </div>
+            <div class="col-lg-4 col-sm-6 rounded border border-dark">
+                Some quick example text to build on the card title and make up the bulk of the card's content.Some quick
+                example text to build on the card title and make up the bulk of the card's content.Some quick example
+                text to build on the card title and make up the bulk of the card's content.
+            </div>
+            <div class="col-lg-4 col-sm-6 rounded border border-dark">
+                Some quick example text to build on the card title and make up the bulk of the card's content.Some quick
+                example text to build on the card title and make up the bulk of the card's content.Some quick example
+                text to build on the card title and make up the bulk of the card's content.
+            </div>
+            <div class="col-lg-4 col-sm-6 rounded border border-dark">
+                Some quick example text to build on the card title and make up the bulk of the card's content.Some quick
+                example text to build on the card title and make up the bulk of the card's content.Some quick example
+                text to build on the card title and make up the bulk of the card's content.
+            </div>
+            <div class="col-lg-4 col-sm-6 rounded border border-dark">
+                Some quick example text to build on the card title and make up the bulk of the card's content.Some quick
+                example text to build on the card title and make up the bulk of the card's content.Some quick example
+                text to build on the card title and make up the bulk of the card's content.
+            </div>
+            <div class="col-lg-4 col-sm-6 rounded border border-dark">
+                Some quick example text to build on the card title and make up the bulk of the card's content.Some quick
+                example text to build on the card title and make up the bulk of the card's content.Some quick example
+                text to build on the card title and make up the bulk of the card's content.
+            </div>
+            <div class="col-lg-4 col-sm-6 rounded border border-dark">
+                Some quick example text to build on the card title and make up the bulk of the card's content.Some quick
+                example text to build on the card title and make up the bulk of the card's content.Some quick example
+                text to build on the card title and make up the bulk of the card's content.
+            </div>
+            <div class="col-lg-4 col-sm-6 rounded border border-dark">
+                Some quick example text to build on the card title and make up the bulk of the card's content.Some quick
+                example text to build on the card title and make up the bulk of the card's content.Some quick example
+                text to build on the card title and make up the bulk of the card's content.
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- FOOTER -->
-<footer>
+<footer class="mt-auto">
     <th:block th:include="fragments/common :: footer"/>
 </footer>
 
+<script th:src="@{/static/js/bootstrap.min.js}"></script>
 </body>
 </html>

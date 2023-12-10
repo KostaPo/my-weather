@@ -4,15 +4,16 @@
     --grey_col: #808080;
 }
 
+html, body {
+    height: 100%;
+}
+
 header{
     border: 1px solid var(--black_col);
     background-color: var(--grey_col);
 }
 
 footer{
-    bottom: 0;
-    position: absolute;
-    width: 100%;
     border: 1px solid var(--black_col);
     background-color: var(--grey_col);
 }
@@ -43,5 +44,10 @@ footer{
 
 .error {
     color: red;
+}
+
+.form-control:focus {
+    border-color: #565e64;
+    box-shadow: 0 0 0 .25rem rgba(130, 138, 145, .5)
 }
 

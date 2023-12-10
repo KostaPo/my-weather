@@ -8,7 +8,7 @@ import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import ru.kostapo.myweather.exception.OpenWeatherException;
 import ru.kostapo.myweather.model.api.LocationApiRes;
-import ru.kostapo.myweather.servlets.servlet.service.OpenWeatherService;
+import ru.kostapo.myweather.service.OpenWeatherService;
 
 import java.io.*;
 import java.math.BigDecimal;

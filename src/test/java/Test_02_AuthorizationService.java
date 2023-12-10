@@ -11,7 +11,7 @@ import ru.kostapo.myweather.model.User;
 import ru.kostapo.myweather.model.dao.SessionDAO;
 import ru.kostapo.myweather.model.dao.UserDAO;
 import ru.kostapo.myweather.model.dto.UserReqDto;
-import ru.kostapo.myweather.servlets.servlet.service.AuthorizationService;
+import ru.kostapo.myweather.service.AuthorizationService;
 import util.TestHibernateUtil;
 
 import java.time.Duration;

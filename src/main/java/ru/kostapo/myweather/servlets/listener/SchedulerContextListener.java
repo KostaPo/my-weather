@@ -1,6 +1,6 @@
 package ru.kostapo.myweather.servlets.listener;
 
-import ru.kostapo.myweather.servlets.servlet.service.AuthorizationService;
+import ru.kostapo.myweather.service.AuthorizationService;
 import ru.kostapo.myweather.utils.HibernateUtil;
 import ru.kostapo.myweather.utils.PropertiesUtil;
 

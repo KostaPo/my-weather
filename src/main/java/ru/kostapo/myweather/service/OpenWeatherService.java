@@ -1,4 +1,4 @@
-package ru.kostapo.myweather.servlets.servlet.service;
+package ru.kostapo.myweather.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -2,44 +2,53 @@ package ru.kostapo.myweather.servlets.servlet;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
-import ru.kostapo.myweather.exception.UserNotFoundException;
-import ru.kostapo.myweather.model.User;
-import ru.kostapo.myweather.model.dao.UserDAO;
+import ru.kostapo.myweather.model.Location;
+import ru.kostapo.myweather.model.api.WeatherApiRes;
+import ru.kostapo.myweather.model.dao.LocationDAO;
 import ru.kostapo.myweather.model.dto.UserResDto;
-import ru.kostapo.myweather.model.mapper.UserMapper;
+import ru.kostapo.myweather.service.OpenWeatherService;
 import ru.kostapo.myweather.utils.HibernateUtil;
+import ru.kostapo.myweather.utils.HttpClientUtil;
 
 import java.io.*;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 @WebServlet(name = "MainServlet", value = "/")
 public class MainServlet extends HttpServlet {
 
+    private OpenWeatherService weatherService;
     private TemplateEngine templateEngine;
-    private UserDAO userDAO;
+    private LocationDAO locationDAO;
 
     @Override
     public void init() {
-        userDAO = new UserDAO(HibernateUtil.getSessionFactory());
+        weatherService = new OpenWeatherService(HttpClientUtil.getHttpClient());
+        locationDAO = new LocationDAO(HibernateUtil.getSessionFactory());
         templateEngine = (TemplateEngine) getServletContext().getAttribute("templateEngine");
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         WebContext context = new WebContext(request, response, getServletContext());
-        String login = (String) request.getSession().getAttribute("user_login");
-        try {
-            Optional<User> user = userDAO.findByLogin(login);
-            if(user.isPresent()) {
-                UserResDto userResponse = UserMapper.INSTANCE.toDto(user.get());
-                context.setVariable("user", userResponse);
-            }
-            String output = templateEngine.process("index", context);
-            response.getWriter().write(output);
-        } catch (UserNotFoundException e) {
-            throw new RuntimeException(e);
+
+        UserResDto userResponse = (UserResDto) request.getSession().getAttribute("user");
+        context.setVariable("user", userResponse);
+
+        List<Location> locations = locationDAO.findByUserId(userResponse.getId()).stream()
+                .sorted((a, b) -> b.getId().compareTo(a.getId()))
+                .collect(Collectors.toList());
+        Map<Location, WeatherApiRes> weatherList = new LinkedHashMap<>();
+        for(Location location : locations) {
+            WeatherApiRes tmp = weatherService.getWeatherForLocation(location);
+            tmp.setLocationName(location.getName());
+            weatherList.put(location,tmp);
         }
+        context.setVariable("weatherList", weatherList);
+
+        String output = templateEngine.process("index", context);
+        response.getWriter().write(output);
     }
 }

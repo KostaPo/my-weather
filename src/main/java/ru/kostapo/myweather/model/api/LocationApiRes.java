@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.math.BigDecimal;
-
 @Setter
 @Getter
 @Builder
@@ -22,18 +20,11 @@ public class LocationApiRes {
     private String country;
 
     @JsonProperty("lat")
-    private BigDecimal latitude;
+    private Double latitude;
 
     @JsonProperty("lon")
-    private BigDecimal longitude;
+    private Double longitude;
 
-    @Override
-    public String toString() {
-        return "LocationApiRes{" +
-                "name='" + name + '\'' +
-                ", country='" + country + '\'' +
-                ", lat=" + latitude +
-                ", lon=" + longitude +
-                '}';
-    }
+    @JsonProperty("state")
+    private String state;
 }

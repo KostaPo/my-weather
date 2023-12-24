@@ -11,7 +11,9 @@ import ru.kostapo.myweather.model.Location;
 import ru.kostapo.myweather.model.api.LocationApiRes;
 import ru.kostapo.myweather.model.api.WeatherApiRes;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.util.List;
 
 public class OpenWeatherService {
@@ -30,19 +32,24 @@ public class OpenWeatherService {
     }
 
     public List<LocationApiRes> getLocationsByName(String name) {
-        HttpGet httpGet = new HttpGet(getUriForGeocodingRequest(name));
-        try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
-            int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode >= 400) {
+        try {
+            String encodedName = URLEncoder.encode(name, "UTF-8");
+            HttpGet httpGet = new HttpGet(getUriForGeocodingRequest(encodedName));
+            try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                if (statusCode >= 400) {
+                    throw new OpenWeatherException("OpenWeatherApiException");
+                }
+                String responseBody = EntityUtils.toString(response.getEntity());
+                return objectMapper.readValue(responseBody, new TypeReference<List<LocationApiRes>>() {
+                });
+            } catch (OpenWeatherException e) {
                 throw new OpenWeatherException("OpenWeatherApiException");
+            } catch (Exception e) {
+                throw new RuntimeException("Ошибка Сети", e);
             }
-            String responseBody = EntityUtils.toString(response.getEntity());
-            return objectMapper.readValue(responseBody, new TypeReference<List<LocationApiRes>>() {
-            });
-        } catch (OpenWeatherException e) {
-            throw new OpenWeatherException("OpenWeatherApiException");
-        } catch (Exception e) {
-            throw new RuntimeException("Ошибка Сети", e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -85,7 +92,14 @@ public class OpenWeatherService {
                 .append("&appid=")
                 .append(APP_ID)
                 .append("&units=metric");
-        System.out.println(stringBuilder);
         return URI.create(stringBuilder.toString());
+    }
+
+    public String getIconUrl(String tag) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("https://openweathermap.org/img/wn/")
+                .append(tag)
+                .append(".png");
+        return stringBuilder.toString();
     }
 }

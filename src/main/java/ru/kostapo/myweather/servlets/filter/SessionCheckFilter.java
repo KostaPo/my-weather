@@ -1,7 +1,9 @@
 package ru.kostapo.myweather.servlets.filter;
 
 import ru.kostapo.myweather.model.Session;
+import ru.kostapo.myweather.model.User;
 import ru.kostapo.myweather.model.dao.SessionDAO;
+import ru.kostapo.myweather.model.mapper.UserMapper;
 import ru.kostapo.myweather.service.AuthorizationService;
 import ru.kostapo.myweather.utils.HibernateUtil;
 
@@ -37,7 +39,7 @@ public class SessionCheckFilter implements Filter {
         if (session_id != null) {
             Optional<Session> session = sessionDAO.findById(session_id);
             if(session.isPresent()) {
-                request.getSession().setAttribute("user_login", session.get().getUser().getLogin());
+                request.getSession().setAttribute("user", UserMapper.INSTANCE.toDto(session.get().getUser()));
             } else {
                 authService.logout(request, response);
                 response.sendRedirect("/signin");

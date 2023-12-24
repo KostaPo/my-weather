@@ -1,4 +1,22 @@
 package ru.kostapo.myweather.utils;
 
-public class TimeUtil {
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+
+import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
+public class SerializeTimeUtil extends JsonDeserializer<String> {
+    @Override
+    public String deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        long timestamp = p.getValueAsLong();
+        Instant instant = Instant.ofEpochMilli(timestamp * 1000);
+        return LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+                .format(DateTimeFormatter.ofPattern("EEEE, HH:mm", Locale.ENGLISH));
+    }
 }

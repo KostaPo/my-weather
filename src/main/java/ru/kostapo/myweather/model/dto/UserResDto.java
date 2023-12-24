@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserResDto {
+    private Long id;
     private String login;
-    private String session_id;
 }

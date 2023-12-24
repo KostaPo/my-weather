@@ -18,37 +18,27 @@ public class Wind {
     @JsonProperty("deg")
     private Integer deg;
 
-    @JsonProperty("gust")
-    private BigInteger gust;
-
     public String getWindSide() {
         if (deg >= 337.5 || deg < 22.5) {
-            return "Север";
+            return "N";
         } else if (deg >= 22.5 && deg < 67.5) {
-            return "Северо-Восток";
+            return "NE";
         } else if (deg >= 67.5 && deg < 112.5) {
-            return "Восток";
+            return "E";
         } else if (deg >= 112.5 && deg < 157.5) {
-            return "Юго-Восток";
+            return "SE";
         } else if (deg >= 157.5 && deg < 202.5) {
-            return "Юг";
+            return "S";
         } else if (deg >= 202.5 && deg < 247.5) {
-            return "Юго-Запад";
+            return "SW";
         } else if (deg >= 247.5 && deg < 292.5) {
-            return "Запад";
+            return "W";
         } else if (deg >= 292.5 && deg < 337.5) {
-            return "Северо-Запад";
+            return "NW";
         } else {
             return "UNKNOWN";
         }
     }
 
-    @Override
-    public String toString() {
-        return "Wind{" +
-                "Скорость=" + speed + "м/c" +
-                ", Направление=" + getWindSide() +
-                ", Порыв=" + gust + "м/c" +
-                '}';
-    }
+
 }

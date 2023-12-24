@@ -11,7 +11,8 @@ import java.math.BigDecimal;
 @Setter
 @Getter
 @Entity
-@Table(name="locations")
+@Table(name="locations",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "latitude", "longitude"}))
 public class Location {
 
     private static final String SEQ_NAME = "location_seq";
@@ -25,10 +26,10 @@ public class Location {
     private String name;
 
     @NotNull(message = "Укажите широту!")
-    private BigDecimal latitude;
+    private Double latitude;
 
     @NotNull(message = "Укажите долготу!")
-    private BigDecimal longitude;
+    private Double longitude;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

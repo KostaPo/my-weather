@@ -13,10 +13,4 @@ public class Cloudiness {
     @JsonProperty("all")
     private Integer percent;
 
-    @Override
-    public String toString() {
-        return "Облачность{" +
-                percent + "%" +
-                '}';
-    }
 }

@@ -2,11 +2,13 @@ package ru.kostapo.myweather.model.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import ru.kostapo.myweather.model.api.entity.Cloudiness;
 import ru.kostapo.myweather.model.api.entity.Main;
 import ru.kostapo.myweather.model.api.entity.Weather;
 import ru.kostapo.myweather.model.api.entity.Wind;
+import ru.kostapo.myweather.utils.SerializeTimeUtil;
 
 import java.util.List;
 
@@ -23,10 +25,8 @@ public class WeatherApiRes {
     private String locationName;
 
     @JsonProperty("dt")
-    private long requestTime;
-
-    @JsonProperty("timezone")
-    private long timezone;
+    @JsonDeserialize(using = SerializeTimeUtil.class)
+    private String lastUpdate;
 
     @JsonProperty("weather")
     private List<Weather> weatherList;
@@ -39,15 +39,4 @@ public class WeatherApiRes {
 
     @JsonProperty("clouds")
     private Cloudiness clouds;
-
-    @Override
-    public String toString() {
-        return "WeatherApiRes{" + "\n" +
-                "Локация='" + locationName + "\n" +
-                ", Погода=" + weatherList + "\n" +
-                ", Общее=" + main + "\n" +
-                ", Ветер=" + wind + "\n" +
-                ", Облака=" + clouds + "\n" +
-                '}' + "\n";
-    }
 }

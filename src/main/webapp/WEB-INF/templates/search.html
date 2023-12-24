@@ -1,10 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <th:block th:include="fragments/common :: head"/>
 </head>
-<body>
-$END$
+
+<body class="d-flex flex-column min-vh-100">
+
+<!-- HEADER -->
+<header>
+    <th:block th:include="fragments/common :: header"/>
+</header>
+
+<!-- USER LINE -->
+<div class="userline">
+    <th:block th:include="fragments/common :: userline"/>
+</div>
+
+<div class="container mt-3 mb-3">
+    <div class="row">
+        <div class="text-center">
+            <h1 class="text">
+                Search result:
+            </h1>
+        </div>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-sm-6 py-1 px-1 rounded border border-dark" th:each="location : ${locations}">
+                <th:block th:include="fragments/common :: location_card"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="mt-auto">
+    <th:block th:include="fragments/common :: footer"/>
+</footer>
+
 </body>
 </html>

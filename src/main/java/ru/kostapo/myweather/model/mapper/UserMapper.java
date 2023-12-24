@@ -15,6 +15,5 @@ public interface UserMapper {
     @Mapping(target = "id", ignore = true)
     User toModel(UserReqDto userDto);
 
-    @Mapping(expression = "java(user.getSessions().isEmpty() ? null : user.getSessions().stream().findFirst().get().getId())", target = "session_id")
     UserResDto toDto(User user);
 }

@@ -34,3 +34,116 @@
         </div>
     </div>
 </footer>
+
+<!-- USER_LINE -->
+<div th:fragment="userline">
+    <div class="container mt-3 mb-3">
+        <div class="row">
+            <div class="col-sm text-center">
+                <h1 class="text">
+                    <span th:text="'Hello, ' + ${user.getLogin()}"></span>!
+                </h1>
+            </div>
+            <div class="col-sm text-center">
+                <form action="/search" method="get">
+                    <div class="input-group rounded">
+                        <input class="form-control" type="search" placeholder="Search" name="location" required>
+                        <button type="submit" class="btn btn-secondary"
+                                style="background-color: var(--grey_col); color: var(--black_col);">
+                            <i class="icon-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm text-center">
+                <form action="/logout" method="post">
+                    <button type="submit" class="btn btn-secondary"
+                            style="background-color: var(--grey_col); color: var(--black_col);">Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- LOCATION_CARD -->
+<div th:fragment="location_card" class="mx-auto">
+    <h5 class="card-title" th:text="${location.name}"></h5>
+    <h6 class="card-subtitle mb-2 text-muted" th:text="${location.country}"></h6>
+    <p class="card-text" th:text="${location.state}"></p>
+    <form action="/search" method="post">
+        <input th:name="name" th:value="${location.name}" type="hidden">
+        <input th:name="latitude" th:value="${location.latitude}" type="hidden">
+        <input th:name="longitude" th:value="${location.longitude}" type="hidden">
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-sm-6">
+                <button type="submit" class="btn btn-secondary btn-block w-100"
+                        style="background-color: var(--grey_col); color: var(--black_col);">ADD
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- WEATHER_CARD -->
+<div th:fragment="weather_card">
+    <div class="card">
+        <div class="card-body p-4">
+            <div class="d-flex">
+                <h6 class="flex-grow-1">
+                    <span th:text="${item.key.name}"></span>
+                </h6>
+                <h6>
+                    <span th:text="${item.value.lastUpdate}"></span>
+                </h6>
+            </div>
+            <div class="d-flex flex-column text-center">
+                <h6 class="display-4 mb-0 font-weight-bold">
+                    <p><span th:text="${item.value.main.temperature}"></span>C°</p>
+                </h6>
+                <span class="small" style="color: var(--grey_col);">
+                            <p>Feel like <span th:text="${item.value.main.feelsLike}"></span>C°</p>
+                        </span>
+                <span class="small">
+                            <span th:text="${item.value.weatherList[0].description}"></span>
+                        </span>
+            </div>
+
+            <div class="d-flex align-items-center">
+                <div class="flex-grow-1" style="font-size: 1rem;">
+                    <div>
+                        <i class="icon-wind"></i>
+                        <span th:text="${item.value.wind.getWindSide()}"></span>
+                        <span class="ms-1" th:text="${item.value.wind.speed}"></span>m/s
+                    </div>
+                    <div>
+                        <i class="icon-tint"></i>
+                        <span class="ms-1" th:text="${item.value.main.humidity}"></span>%
+                    </div>
+                    <div>
+                        <i class="icon-angle-double-down"></i>
+                        <span class="ms-1" th:text="${item.value.main.pressure}"></span>hPa
+                    </div>
+                    <div>
+                        <i class="icon-cloud"></i>
+                        <span class="ms-1" th:text="${item.value.clouds.percent}"></span>%
+
+                    </div>
+                </div>
+                <div>
+                    <img th:src="'https://openweathermap.org/img/wn/'+ ${item.value.weatherList[0].icon} +'@4x.png'"
+                         width="100px"/>
+                </div>
+            </div>
+        </div>
+        <form th:action="@{'/delete'}" method="post">
+            <input type="hidden" name="locationId" th:value="${item.key.id}"/>
+            <button type="submit" class="btn btn-secondary btn-block w-100"
+                    style="background-color: var(--grey_col); color: var(--black_col);">REMOVE
+            </button>
+        </form>
+    </div>
+</div>
+
+
+

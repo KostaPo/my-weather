@@ -33,8 +33,8 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<Location> locations = new LinkedHashSet<>();
+    private Set<Location> locations = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<Session> sessions = new LinkedHashSet<>();
+    private Set<Session> sessions = new HashSet<>();
 }

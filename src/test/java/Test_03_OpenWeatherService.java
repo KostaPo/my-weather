@@ -53,8 +53,9 @@ public class Test_03_OpenWeatherService {
         LocationApiRes testLocation = LocationApiRes.builder()
                 .name("Moscow")
                 .country("RU")
-                .latitude(BigDecimal.valueOf(55.7504461))
-                .longitude(BigDecimal.valueOf(37.6174943))
+                .state("Moscow")
+                .latitude(55.7504461)
+                .longitude(37.6174943)
                 .build();
 
         Assertions.assertAll("Проверка локации на наличие, сравнение локаций.",

@@ -13,29 +13,14 @@ import java.math.BigDecimal;
 public class Main {
 
     @JsonProperty("temp")
-    private BigDecimal temperature;
+    private Integer temperature;
 
     @JsonProperty("feels_like")
-    private BigDecimal feelsLike;
+    private Integer feelsLike;
 
     @JsonProperty("pressure")
     private Integer pressure;
 
     @JsonProperty("humidity")
     private Integer humidity;
-
-    @JsonProperty("temp_min")
-    private BigDecimal tMin;
-
-    @JsonProperty("temp_max")
-    private BigDecimal tMax;
-
-    @Override
-    public String toString() {
-        return "Main{" +
-                "Температура=" + temperature +
-                ", Давление=" + pressure +
-                ", Влажность=" + humidity +
-                '}';
-    }
 }

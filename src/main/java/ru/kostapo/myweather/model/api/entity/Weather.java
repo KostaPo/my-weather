@@ -16,11 +16,6 @@ public class Weather {
     @JsonProperty("description")
     private String description;
 
-    @Override
-    public String toString() {
-        return "Weather{" +
-                "Состояние='" + state + '\'' +
-                ", Описание='" + description + '\'' +
-                '}';
-    }
+    @JsonProperty("icon")
+    private String icon;
 }

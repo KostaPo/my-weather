@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet (name = "Logout", urlPatterns = "/logout")
+@WebServlet (name = "LogoutServlet", urlPatterns = "/logout")
 public class LogoutServlet extends HttpServlet {
 
     private AuthorizationService authService;

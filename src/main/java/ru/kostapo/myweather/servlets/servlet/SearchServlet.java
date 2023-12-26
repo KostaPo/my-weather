@@ -78,7 +78,7 @@ public class SearchServlet extends HttpServlet {
                 locationDAO.save(location);
             } catch (UniqConstraintViolationException ignored) {
             } finally {
-                response.sendRedirect("/");
+                response.sendRedirect(request.getContextPath() + "/");
             }
         }
     }

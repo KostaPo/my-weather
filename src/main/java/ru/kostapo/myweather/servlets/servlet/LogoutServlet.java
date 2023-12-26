@@ -22,6 +22,6 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         authService.logout(request, response);
-        response.sendRedirect("/signin");
+        response.sendRedirect(request.getContextPath() + "/signin");
     }
 }

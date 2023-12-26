@@ -44,7 +44,7 @@ public class RegistrationServlet extends HttpServlet {
         try {
             Session session = authService.registration(userRequest);
             response.addCookie(authService.getNewCookie(session));
-            response.sendRedirect("/");
+            response.sendRedirect(request.getContextPath() + "/");
         } catch (ValidConstraintViolationException e) {
             BindingResult bindingResult = new BindingResult(e.getConstraintViolations());
             context.setVariable("errors", bindingResult);

@@ -29,7 +29,8 @@ public class SessionCheckFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
@@ -42,7 +43,7 @@ public class SessionCheckFilter implements Filter {
                 request.getSession().setAttribute("user", UserMapper.INSTANCE.toDto(session.get().getUser()));
             } else {
                 authService.logout(request, response);
-                response.sendRedirect("/signin");
+                response.sendRedirect(request.getContextPath() + "/signin");
                 return;
             }
         }

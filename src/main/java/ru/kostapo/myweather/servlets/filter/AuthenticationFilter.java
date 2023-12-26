@@ -20,7 +20,8 @@ public class AuthenticationFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
@@ -33,21 +34,17 @@ public class AuthenticationFilter implements Filter {
             String session_id = getSessionFromCookies(request);
             if (session_id != null) {
                 if (allowedUrlsForNoAuthenticatedUsers.contains(requestUrl)) {
-                    response.sendRedirect("/");
+                    response.sendRedirect(request.getContextPath() + "/");
                     return;
                 }
             } else {
                 if (!allowedUrlsForNoAuthenticatedUsers.contains(requestUrl)) {
-                    response.sendRedirect("/signin");
+                    response.sendRedirect(request.getContextPath() + "/signin");
                     return;
                 }
             }
             filterChain.doFilter(servletRequest, servletResponse);
         }
-    }
-
-    @Override
-    public void destroy() {
     }
 
     private String getSessionFromCookies(HttpServletRequest request) {

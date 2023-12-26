@@ -24,6 +24,6 @@ public class DeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Long locationId = Long.valueOf(request.getParameter("locationId"));
         locationDAO.deleteById(locationId);
-        response.sendRedirect("/");
+        response.sendRedirect(request.getContextPath() + "/");
     }
 }

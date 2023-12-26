@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
         try {
             Session session = authService.login(userRequest);
             response.addCookie(authService.getNewCookie(session));
-            response.sendRedirect("/");
+            response.sendRedirect(request.getContextPath() + "/");
         } catch (UserNotFoundException e) {
             BindingResult bindingResult = new BindingResult("login", e.getMessage());
             context.setVariable("errors", bindingResult);

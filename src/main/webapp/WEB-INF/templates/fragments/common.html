@@ -45,7 +45,7 @@
                 </h1>
             </div>
             <div class="col-sm text-center">
-                <form action="/search" method="get">
+                <form th:action="@{/search}" method="get">
                     <div class="input-group rounded">
                         <input class="form-control" type="search" placeholder="Search" name="location" required>
                         <button type="submit" class="btn btn-secondary"
@@ -71,7 +71,7 @@
     <h5 class="card-title" th:text="${location.name}"></h5>
     <h6 class="card-subtitle mb-2 text-muted" th:text="${location.country}"></h6>
     <p class="card-text" th:text="${location.state}"></p>
-    <form action="/search" method="post">
+    <form th:action="@{/search}" method="post">
         <input th:name="name" th:value="${location.name}" type="hidden">
         <input th:name="latitude" th:value="${location.latitude}" type="hidden">
         <input th:name="longitude" th:value="${location.longitude}" type="hidden">

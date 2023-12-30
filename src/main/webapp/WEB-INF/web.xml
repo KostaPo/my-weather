@@ -58,24 +58,11 @@
 
     <servlet>
         <servlet-name>SearchServlet</servlet-name>
-        <servlet-class>ru.kostapo.myweather.servlets.servlet.RegistrationServlet</servlet-class>
+        <servlet-class>ru.kostapo.myweather.servlets.servlet.SearchServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SearchServlet</servlet-name>
         <url-pattern>/search</url-pattern>
     </servlet-mapping>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </web-app>

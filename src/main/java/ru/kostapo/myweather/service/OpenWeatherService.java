@@ -94,12 +94,4 @@ public class OpenWeatherService {
                 .append("&units=metric");
         return URI.create(stringBuilder.toString());
     }
-
-    public String getIconUrl(String tag) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("https://openweathermap.org/img/wn/")
-                .append(tag)
-                .append(".png");
-        return stringBuilder.toString();
-    }
 }

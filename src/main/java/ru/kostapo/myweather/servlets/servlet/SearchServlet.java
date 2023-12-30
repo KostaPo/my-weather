@@ -1,8 +1,10 @@
 package ru.kostapo.myweather.servlets.servlet;
 
+import lombok.extern.log4j.Log4j;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import ru.kostapo.myweather.exception.BindingResult;
+import ru.kostapo.myweather.exception.OpenWeatherException;
 import ru.kostapo.myweather.exception.UniqConstraintViolationException;
 import ru.kostapo.myweather.model.Location;
 import ru.kostapo.myweather.model.User;

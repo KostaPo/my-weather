@@ -29,7 +29,7 @@ public class AuthenticationFilter implements Filter {
         String requestUrl = request.getRequestURI().substring(request.getContextPath().length());
 
         if (requestUrl.startsWith(request.getContextPath() + "/static/")) {
-            filterChain.doFilter(request, response);
+            filterChain.doFilter(servletRequest, servletResponse);
         } else {
             String session_id = getSessionFromCookies(request);
             if (session_id != null) {

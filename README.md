@@ -15,5 +15,5 @@ https://zhukovsd.github.io/java-backend-learning-course/Projects/WeatherViewer/
  <li>Выполните команды: 'mvn clean', 'mvn install', 'mvn package'</li>
  <li>Скопируйте файл my-weather-1.0.war из папки target на свой сервер</li>
  <li>Добавьте переменную окружения API_KEY в контекст вашего сервера</li>
- <li>Запустите программу командой: 'jar -xvf tennis-scoreboard-2.0.war'</li>
+ <li>Запустите программу командой: 'jar -xvf my-weather-1.0.war'</li>
 </ul>

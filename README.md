@@ -13,6 +13,7 @@ https://zhukovsd.github.io/java-backend-learning-course/Projects/WeatherViewer/
 <h1>Запуск приложения:</h1>
 <ul>
  <li>Выполните команды: 'mvn clean', 'mvn install', 'mvn package'</li>
+ <li>Создайте БД на своем сервере согласно данным из config файла подключения</li>
  <li>Скопируйте файл my-weather-1.0.war из папки target на свой сервер</li>
  <li>Добавьте переменную окружения API_KEY в контекст вашего сервера</li>
  <li>Запустите программу командой: 'jar -xvf my-weather-1.0.war'</li>
